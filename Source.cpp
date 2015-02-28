@@ -1,22 +1,22 @@
 ﻿/*******************************************************************************
 Lời giải
 
-Gọi best(colCountMax, colProblem) là kết quả tốt nhất khi ta phải giải quyết ma trận gồm
-M dòng và colProblem cột từ 1 tới colProblem, mà xài đúng colCountMax cột trống (không biến đổi).
+Gọi best(colCount, colProblem) là kết quả tốt nhất khi ta phải giải quyết ma trận gồm
+M dòng và colProblem cột từ 1 tới colProblem, mà xài đúng colCount cột trống (không biến đổi).
 
 Nếu cột colProblem CÓ được chọn để trống
-best(colCountMax, colProblem) = best(colCountMax - 1, colProblem)
+best(colCount, colProblem) = best(colCount - 1, colProblem)
 
 Nếu cột colProblem KHÔNG được chọn để trống
 (tức là mất 1 phép biến đổi tại nó)
-(tức là colCountMax cột để trống nằm hết ở phía trước: từ cột 1 tới cột colProblem - 1)
-best(colCountMax, colProblem) = best(colCountMax, colProblem - 1)  + 1
+(tức là colCount cột để trống nằm hết ở phía trước: từ cột 1 tới cột colProblem - 1)
+best(colCount, colProblem) = best(colCount, colProblem - 1)  + 1
 
-Nếu colCountMax == colProblem (tức là tất cả các cột để trống hết) thì
-best(colCountMax, colProblem) = số hàng có 1
+Nếu colCount == colProblem (tức là tất cả các cột để trống hết) thì
+best(colCount, colProblem) = số hàng có 1
 
-Nếu colCountMax == 0 (cứ cột nào có 1 là biến đổi)
-best(colCountMax, colProblem) = best(colCountMax, colProblem - 1) + FLAG
+Nếu colCount == 0 (cứ cột nào có 1 là biến đổi)
+best(colCount, colProblem) = best(colCount, colProblem - 1) + FLAG
 trong đó FLAG = zero nếu cột colProblem toàn bit zero hết, ngược lại FLAG = 1
 
 *******************************************************************************/
@@ -68,18 +68,18 @@ void dynamicProg() {
 			}
 		}
  
-		int colCountMax = 0;
-		best[colCountMax][colProblem] = best[colCountMax][colProblem - 1] + flag;
+		int colCount = 0;
+		best[colCount][colProblem] = best[colCount][colProblem - 1] + flag;
 
-		for (colCountMax = 1; colCountMax < colProblem; colCountMax++) {
-			best[colCountMax][colProblem] = MIN(
-				best[colCountMax - 1][colProblem],
-				best[colCountMax][colProblem - 1] + 1
+		for (colCount = 1; colCount < colProblem; colCount++) {
+			best[colCount][colProblem] = MIN(
+				best[colCount - 1][colProblem],
+				best[colCount][colProblem - 1] + 1
 			);
 		}
 
-		colCountMax = colProblem;
-		best[colCountMax][colProblem] = countBit1Rows;
+		colCount = colProblem;
+		best[colCount][colProblem] = countBit1Rows;
 	}
  
 }
